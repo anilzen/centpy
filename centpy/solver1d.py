@@ -1,111 +1,5 @@
-# Import external packages
-
-import numpy as np
-from dataclasses import dataclass
-from abc import ABC, abstractmethod
+from ._helpers import *
 import sys
-
-#################
-# Helper definitions
-#################
-
-# Parameters for the solvers
-alpha = 1.4  # for the minmod limiter
-eps = 0.000001  # when using sd2
-odd = True  # when using fd2
-
-# Index definitions for convenience
-j0 = slice(2, -2)
-jp = slice(3, -1)
-jm = slice(1, -3)
-
-# p coefficient
-def p_coefs(u):
-    pl0 = u[j0]
-    pl1 = u[j0] - u[jm]
-    pr0 = u[j0]
-    pr1 = u[jp] - u[j0]
-    pc0 = pl0 - (1.0 / 12.0) * (pr1 - pl1)
-    pc1 = 0.5 * (pl1 + pr1)
-    pc2 = pr1 - pl1
-    return pl0, pl1, pr0, pr1, pc0, pc1, pc2
-
-
-# Limiters (minmod, va)
-
-
-def minmod(a, b):
-    return 0.5 * (np.sign(a) + np.sign(b)) * np.minimum(np.abs(a), np.abs(b))
-
-
-def minmod3(a, b, c):
-    return minmod(a, minmod(b, c))
-
-
-def minmod_prime(u):
-    return minmod3(
-        alpha * (u[1:-1] - u[:-2]), 0.5 * (u[2:] - u[:-2]), alpha * (u[2:] - u[1:-1])
-    )
-
-
-def va(a, b):
-    c = a ** 2 + b ** 2
-    return np.divide(a * b * (a + b), c, out=np.zeros_like(a), where=c != 0)
-
-
-def va_prime(u):
-    return va(u[2:] - u[1:-1], u[1:-1] - u[:-2])
-
-
-limiter = va_prime
-
-
-# This is where the parameters are stored, along with the grid.
-# One can solve different equations using the same setup.
-# That's why this class definition is separate from Equation.
-@dataclass
-class Setup1d:
-    # Grid parameters
-    x_init: float = 0.0
-    x_final: float = 1.0
-    t_final: float = 1.0
-    dt_out: float = 0.05
-    J: int = 10
-    cfl: float = 0.9
-    dt: float = 0.0
-    scheme: str = "sd3"  # can be fd2, sd2, or sd3
-
-
-# This is the equation class including all equation-specific definitions.
-class Equation1d(ABC):
-    def __init__(self, setup):
-        for key in setup.__dict__.keys():
-            setattr(self, key, setup.__dict__[key])
-        self.Nt = int(np.ceil(self.t_final / self.dt_out))
-        self.x, self.dx = self.grid(self.x_init, self.x_final, self.J)
-
-    def grid(self, x_init, x_final, J):
-        dx = (x_final - x_init) / self.J
-        x = np.linspace(x_init - 2.0 * dx, x_final + dx, J + 4)
-        if self.scheme == "fd2":
-            x += 0.5 * dx  # staggered grid for FD2
-        return x, dx
-
-    @abstractmethod
-    def flux_x():
-        pass
-
-    @abstractmethod
-    def initial_data():
-        pass
-
-    @abstractmethod
-    def boundary_conditions():
-        pass
-
-    @abstractmethod
-    def spectral_radius_x():
-        pass
 
 
 class Solver1d:
@@ -272,8 +166,7 @@ class Solver1d:
         t = 0.0
         t_out = 0.0
         while t < self.t_final:
-            r_max = np.max(self.spectral_radius_x(self.u))
-            dt = self.dx * self.cfl / r_max
+            dt = self.set_dt()
             self.dt = min(dt, self.dt_out - t_out)
             t += self.dt
             t_out += self.dt
@@ -283,3 +176,8 @@ class Solver1d:
                 i += 1
                 self.u_n[i, :] = self.u
                 t_out = 0
+
+    def set_dt(self):
+        r_max = np.max(self.spectral_radius_x(self.u))
+        dt = self.dx * self.cfl / r_max
+        return dt
