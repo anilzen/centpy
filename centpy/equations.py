@@ -2,14 +2,18 @@
 
 import numpy as np
 from abc import ABC, abstractmethod
+from .parameters import Pars1d, Pars2d
 
 # 1d
-class Equation1d(ABC):
+class Equation1d(ABC, Pars1d):
     def __init__(self, pars):
         for key in pars.__dict__.keys():
             setattr(self, key, pars.__dict__[key])
         self.Nt = int(np.ceil(self.t_final / self.dt_out))
         self.x, self.dx = self.grid(self.x_init, self.x_final, self.J)
+
+        # Boolean for FD2
+        self.odd = True
 
     def grid(self, x_init, x_final, J):
         dx = (x_final - x_init) / self.J
@@ -17,10 +21,6 @@ class Equation1d(ABC):
         if self.scheme == "fd2":
             x += 0.5 * dx  # staggered grid for FD2
         return x, dx
-
-    @abstractmethod
-    def flux_x(self):
-        pass
 
     @abstractmethod
     def initial_data(self):
@@ -31,22 +31,26 @@ class Equation1d(ABC):
         pass
 
     @abstractmethod
+    def flux_x(self):
+        pass
+
+    @abstractmethod
     def spectral_radius_x(self):
         pass
 
 
 # 2d
-class Equation2d(Equation1d):
+class Equation2d(Equation1d, Pars2d):
     def __init__(self, pars):
         super().__init__(pars)
         self.y, self.dy = self.grid(self.y_init, self.y_final, self.K)
         self.xx, self.yy = np.meshgrid(self.x, self.y, sparse=True)
 
     @abstractmethod
-    def flux_y(self):
+    def flux_y(self, u):
         pass
 
     @abstractmethod
-    def spectral_radius_y(self):
+    def spectral_radius_y(self, u):
         pass
 

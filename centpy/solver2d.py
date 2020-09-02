@@ -11,7 +11,6 @@ class Solver2d(Solver1d):
         self.spectral_radius_y = equation.spectral_radius_y
 
     def fd2(self, u):
-        global odd
         u_star = np.ones(u.shape)
         un_half = np.ones(u.shape)
         u_prime_x = np.ones(u.shape)
@@ -20,7 +19,7 @@ class Solver2d(Solver1d):
         u_prime_x[1:-1, 1:-1] = limiter_x(u)
         u_prime_y[1:-1, 1:-1] = limiter_y(u)
 
-        if odd:
+        if self.odd:
             un_half[1:-2, 1:-2] = 0.25 * (
                 (u[1:-2, 1:-2] + u[2:-1, 1:-2] + u[1:-2, 2:-1] + u[2:-1, 2:-1])
                 + 0.25
@@ -56,7 +55,7 @@ class Solver2d(Solver1d):
         f_star = self.flux_x(u_star)
         g_star = self.flux_y(u_star)
 
-        if odd:
+        if self.odd:
             u[1:-2, 1:-2] = (
                 un_half[1:-2, 1:-2]
                 - 0.5
@@ -94,7 +93,7 @@ class Solver2d(Solver1d):
             )
 
         self.boundary_conditions(u)
-        odd = not odd
+        self.odd = not self.odd
         return u
 
     #################

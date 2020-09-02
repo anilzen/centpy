@@ -1,4 +1,5 @@
 from ._helpers import *
+from .equations import Equation1d
 import sys
 
 
@@ -6,6 +7,20 @@ class Solver1d:
     def __init__(self, equation):
         for key in equation.__dict__.keys():
             setattr(self, key, equation.__dict__[key])
+
+        # Set the solver for the time step
+        if self.scheme == "sd2":
+            self.step = self.sd2
+        elif self.scheme == "sd3":
+            self.step = self.sd3
+        elif self.scheme == "fd2":
+            self.step = self.fd2
+        else:
+            sys.exit(
+                "Scheme "
+                + self.scheme
+                + " is not recognized! Choices are: fd2, sd2, sd3."
+            )
 
         # Equation dependent functions
         self.flux_x = equation.flux_x
@@ -38,7 +53,6 @@ class Solver1d:
     #################
 
     def fd2(self, u):
-        global odd
         u_prime = np.ones(u.shape)
         un_half = np.ones(u.shape)
         self.boundary_conditions(u)
@@ -48,7 +62,7 @@ class Solver1d:
         un_half[1:-1] = u[1:-1] - 0.5 * self.dt / self.dx * limiter(f)
         f_half = self.flux_x(un_half)
         # Corrector
-        if odd:
+        if self.odd:
             u[1:-2] = (
                 0.5 * (u[2:-1] + u[1:-2])
                 + 0.125 * (u_prime[1:-2] - u_prime[2:-1])
@@ -63,7 +77,7 @@ class Solver1d:
         # Boundary conditions
         self.boundary_conditions(u)
         # Switch
-        odd = not odd
+        self.odd = not self.odd
         return u
 
     #################
@@ -150,18 +164,6 @@ class Solver1d:
 
     # Main solver routine
     def solve(self):
-        if self.scheme == "sd2":
-            self.step = self.sd2
-        elif self.scheme == "sd3":
-            self.step = self.sd3
-        elif self.scheme == "fd2":
-            self.step = self.fd2
-        else:
-            sys.exit(
-                "Scheme "
-                + self.scheme
-                + " is not recognized! Choices are: fd2, sd2, sd3."
-            )
         i = 0
         t = 0.0
         t_out = 0.0

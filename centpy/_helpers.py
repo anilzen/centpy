@@ -3,7 +3,6 @@ import numpy as np
 # Parameters for the solvers
 alpha = 1.4  # for the minmod limiter
 eps = 0.000001  # when using sd2
-odd = True  # when using fd2
 
 # Index definitions for convenience
 j0 = slice(2, -2)
