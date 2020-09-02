@@ -27,15 +27,15 @@ class Equation1d(ABC, Pars1d):
         pass
 
     @abstractmethod
-    def boundary_conditions(self):
+    def boundary_conditions(self, u):
         pass
 
     @abstractmethod
-    def flux_x(self):
+    def flux_x(self, u):
         pass
 
     @abstractmethod
-    def spectral_radius_x(self):
+    def spectral_radius_x(self, u):
         pass
 
 
