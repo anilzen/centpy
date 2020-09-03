@@ -1,5 +1,6 @@
 # Class definitions for equations to be tested
 
+from path import *
 import numpy as np
 import centpy
 
@@ -27,10 +28,6 @@ class Burgers1d(centpy.Equation1d):
 
 # Euler equation
 class Euler1d(centpy.Equation1d):
-    def __init__(self, setup, gamma):
-        self.gamma = gamma
-        super().__init__(setup)
-
     def initial_data(self):
         u = np.zeros((self.J + 4, 3))
         midpoint = int(self.J / 2) + 2
@@ -77,10 +74,6 @@ class Euler1d(centpy.Equation1d):
 
 # MHD equation
 class MHD1d(centpy.Equation1d):
-    def __init__(self, setup, B1):
-        self.B1 = B1
-        super().__init__(setup)
-
     def pressure(self, u):
         return (
             u[:, 6]
@@ -193,9 +186,6 @@ class Scalar2d(centpy.Equation2d):
 
 # Euler equation
 class Euler2d(centpy.Equation2d):
-    def __init__(self, setup, gamma):
-        self.gamma = gamma
-        super().__init__(setup)
 
     # Helper functions and definitions for the equation
 
@@ -380,9 +370,6 @@ class Euler2d(centpy.Equation2d):
 
 # MHD equation
 class MHD2d(centpy.Equation2d):
-    def __init__(self, setup, gamma):
-        self.gamma = gamma
-        super().__init__(setup)
 
     # Helper functions for the equation
 
