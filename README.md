@@ -21,7 +21,7 @@ variable, but it is recommended that all attributes are set explicitly. The attr
 | `dt_out`  | time step of storage |
 | `J`       | number of grid points (not including ghost points) |
 | `cfl`     | CFL number |
-| `scheme`  | solver scheme, options are `fd2`, `sd2`, and `sd3` |
+| `scheme`  | solver scheme with options: `fd2`, `sd2`, and `sd3` |
 
 An instance of the parameter class can be created as follows. 
 
@@ -60,11 +60,11 @@ class Burgers1d(centpy.Equation1d):
         return np.abs(u)
 ```
 
-The formulas for these equations are in the Jupyter notebook [animations](centpy/tests/animations.ipynb). The boundary conditions are periodic, so the data on the ghost points are copied from the interior points on the opposite end. 
+The formulas for these equations are in the Jupyter notebook `tests/animations.py`. The boundary conditions are periodic, so the data on the ghost points are copied from the interior points on the opposite end. 
 
 ### Solution
 
-There are two solver classes: `Solver1d` and `Solver2d` defined in [`solver1d.py`](solver1d.py) and [`solver2d.py`](solver2d.py) respectively. To construct the solution, we create an instance of the `Burgers1d` class with the parameters, and give the equation instance as input to the solver class. 
+There are two solver classes: `Solver1d` and `Solver2d` defined in [`solver1d.py`](centpy/solver1d.py) and [`solver2d.py`](centpy/solver2d.py) respectively. To construct the solution, we create an instance of the `Burgers1d` class with the parameters, and give the equation instance as input to the solver class. 
 
 ```
 eqn_burgers1d = Burgers1d(pars_burgers1d)
@@ -72,4 +72,6 @@ soln_burgers = centpy.Solver1d(eqn_burgers1d)
 soln_burgers.solve()
 ```
 
-After the solver step, the instance `soln_burgers` includes the solution array `u_n`. Depending on the shape of the array, plots and animations can be easily constructed. Examples are given in [animations](centpy/tests/animations.ipynb).
+After the solver step, the instance `soln_burgers` includes the solution array `u_n`. Depending on the shape of the array, plots and animations can be easily constructed. Examples are given in the animations notebook `tests/animations.ipynb`.
+
+The options for the central solver are `fd2` for second order fully-discrete method, `sd2` for second order semi-discrete method, and `sd3` for third order semi-discrete method. Information about these solvers is given at the appendix of the [CentPack User Guide](https://home.cscamm.umd.edu/centpack/documentation/CP_user_guide.pdf).
