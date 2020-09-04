@@ -5,12 +5,12 @@ The schemes are translated into Python from [CentPack](https://home.cscamm.umd.e
 
 ## Usage
 
-Centpy provides to the user three main classes for parameters, equations, and solvers. Examples of instances for parameters and equations are in `tests/example_parameters.py` and `tests/example_equations.py`. 
+Centpy provides to the user three main classes for parameters, equations, and solvers. Examples of instances for parameters and equations are in [`tests/example_parameters.py`](centpy/tests/example_parameters.py) and [`tests/example_equations.py`](centpy\tests\example_equations.py).
 
 The numerical solution of a one-dimensional Burgers equation is discussed below.
 
 ### Parameters
-The parameter classes are simple data classes without methods: `Pars1d` and `Pars1d` defined in `parameters.py`. Each attribute has a default 
+The parameter classes are simple [data classes](https://docs.python.org/3/library/dataclasses.html) without methods: `Pars1d` and `Pars1d` defined in [`parameters.py`](centpy/parameters.py). Each attribute has a default 
 variable, but it is recommended that all attributes are set explicitly. The attributes are listed in the table below.
 
 | Attribute | Description | 
@@ -60,7 +60,7 @@ class Burgers1d(centpy.Equation1d):
         return np.abs(u)
 ```
 
-The formulas for these equations are in the Jupyter notebook `tests/animations.py`. The boundary conditions are periodic, so the data on the ghost points are copied from the interior points on the opposite end. 
+The formulas for these equations are in the Jupyter notebook `tests/animations.ipynb`. The boundary conditions are periodic, so the data on the ghost points are copied from the interior points on the opposite end. 
 
 ### Solution
 
