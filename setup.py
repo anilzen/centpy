@@ -4,8 +4,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="centpy-anilzen",
-    version="0.2",
+    name="centpy",
+    version="0.1",
     author="Anil Zenginoglu",
     author_email="anil@umd.edu",
     description="A numerical solver for conservation laws based on central schemes",
@@ -14,7 +14,7 @@ setuptools.setup(
     url="https://github.com/AnilZen/centpy",
     packages=setuptools.find_packages(exclude=["*.tests"]),
     #    ("centpy",),
-    install_requires=["numpy",],
+    install_requires=["numpy"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
