@@ -8,6 +8,9 @@ class Solver1d:
         for key in equation.__dict__.keys():
             setattr(self, key, equation.__dict__[key])
 
+        # Time step is determined in the solver
+        self.dt = 0.0
+
         # Set the solver for the time step
         if self.scheme == "sd2":
             self.step = self.sd2

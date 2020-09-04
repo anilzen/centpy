@@ -14,7 +14,6 @@ class Pars1d:
     dt_out: float = 0.05
     J: int = 10
     cfl: float = 0.9
-    dt: float = 0.0
     scheme: str = "sd3"  # can be fd2, sd2, or sd3
 
 
