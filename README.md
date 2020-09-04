@@ -5,23 +5,23 @@ The schemes are translated into Python from [CentPack](https://home.cscamm.umd.e
 
 ## Usage
 
-Centpy provides to the user three main classes for parameters, equations, and solvers. Examples of instances for parameters and equations are in [`tests/example_parameters.py`](centpy/tests/example_parameters.py) and [`tests/example_equations.py`](centpy\tests\example_equations.py).
+Centpy provides to the user three main classes for parameters, equations, and solvers. Examples of instances for parameters and equations are in [`tests/example_parameters.py`](centpy/tests/example_parameters.py) and [`tests/example_equations.py`](centpy/tests/example_equations.py).
 
 The numerical solution of a one-dimensional Burgers equation is discussed below.
 
 ### Parameters
 The parameter classes are simple [data classes](https://docs.python.org/3/library/dataclasses.html) without methods: `Pars1d` and `Pars1d` defined in [`parameters.py`](centpy/parameters.py). Each attribute has a default 
-variable, but it is recommended that all attributes are set explicitly. The attributes are listed in the table below.
+variable, but it is recommended that all attributes are set explicitly. The attributes are:
 
 | Attribute | Description | 
 | --------- | ----------- |
-| `x_init`  | initial grid boundary |
-| `x_final` | final grid boundary|
+| `x_init`  | left grid point |
+| `x_final` | right grid point|
 | `t_final` | evolution time |
 | `dt_out`  | time step of storage |
-| `J`       | number of grid points (not including ghost points) |
+| `J`       | number of interior grid points |
 | `cfl`     | CFL number |
-| `scheme`  | solver scheme with options: `fd2`, `sd2`, and `sd3` |
+| `scheme`  | solver scheme (`fd2`, `sd2`, or `sd3`) |
 
 An instance of the parameter class can be created as follows. 
 
@@ -33,8 +33,7 @@ pars_burgers1d = centpy.Pars1d(
     dt_out=0.05,
     J=400,
     cfl=0.75,
-    scheme="sd3",
-)
+    scheme="sd3")
 ```
 Note that the parameter data class does not have a member for the time step `dt`, because it is calculated dynamically during the solution of the equation based on the CFL number and maximum spectral radius. 
 
@@ -59,8 +58,7 @@ class Burgers1d(centpy.Equation1d):
     def spectral_radius_x(self, u):
         return np.abs(u)
 ```
-
-The formulas for these equations are in the Jupyter notebook `tests/animations.ipynb`. The boundary conditions are periodic, so the data on the ghost points are copied from the interior points on the opposite end. 
+The boundary conditions are periodic, so the data on the ghost points are copied from the interior points on the opposite end. 
 
 ### Solution
 
@@ -75,3 +73,5 @@ soln_burgers.solve()
 After the solver step, the instance `soln_burgers` includes the solution array `u_n`. Depending on the shape of the array, plots and animations can be easily constructed. Examples are given in the animations notebook `tests/animations.ipynb`.
 
 The options for the central solver are `fd2` for second order fully-discrete method, `sd2` for second order semi-discrete method, and `sd3` for third order semi-discrete method. Information about these solvers is given at the appendix of the [CentPack User Guide](https://home.cscamm.umd.edu/centpack/documentation/CP_user_guide.pdf).
+
+LaTeX formulas and animations for the examples are given in the Jupyter notebook `tests/animations.ipynb`. 
