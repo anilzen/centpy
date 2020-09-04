@@ -14,6 +14,7 @@ setuptools.setup(
     url="https://github.com/AnilZen/centpy",
     packages=setuptools.find_packages(exclude=["*.tests"]),
     #    ("centpy",),
+    install_requires=["numpy",],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
