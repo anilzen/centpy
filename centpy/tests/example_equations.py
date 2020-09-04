@@ -1,6 +1,6 @@
 # Class definitions for equations to be tested
 
-from path import *
+# from path import *
 import numpy as np
 import centpy
 

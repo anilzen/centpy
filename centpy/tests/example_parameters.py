@@ -1,6 +1,6 @@
 # Setup parameters to be used in various examples
 
-from path import *
+# from path import *
 import numpy as np
 import centpy
 
