@@ -75,3 +75,7 @@ After the solver step, the instance `soln_burgers` includes the solution array `
 The options for the central solver are `fd2` for second order fully-discrete method, `sd2` for second order semi-discrete method, and `sd3` for third order semi-discrete method. Information about these solvers is given at the appendix of the [CentPack User Guide](https://home.cscamm.umd.edu/centpack/documentation/CP_user_guide.pdf).
 
 LaTeX formulas and animations for the examples are given in the Jupyter notebook `tests/animations.ipynb`. 
+
+## Acknowledgments
+
+This research was supported in part by [NSF](https://www.nsf.gov/div/index.jsp?div=DMS) and [ONR](https://www.onr.navy.mil/Science-Technology/Departments/Code-31/All-Programs/311-Mathematics-Computers-Research/applied-computational-analysis) grants DMS16-13911 and N00014-1512094. 
