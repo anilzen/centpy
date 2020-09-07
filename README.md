@@ -1,16 +1,16 @@
 # centpy
 
-[![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AnilZen/centpy/blob/master/notebooks/index.ipynb)
-
 Central schemes for conservation laws in Python.
 
 The schemes are translated into Python from [CentPack](https://home.cscamm.umd.edu/centpack/) written by [Jorge Balbás](http://www.csun.edu/~jb715473/index.htm) and [Eitan Tadmor](https://home.cscamm.umd.edu/people/faculty/tadmor/).
 
 ## Usage
 
-Centpy provides to the user three main classes for parameters, equations, and solvers. Examples of instances for parameters and equations are in [`tests/example_parameters.py`](centpy/tests/example_parameters.py) and [`tests/example_equations.py`](centpy/tests/example_equations.py).
+[![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AnilZen/centpy/blob/master/notebooks/index.ipynb)
 
-The numerical solution of a one-dimensional Burgers equation is discussed below.
+Example use cases and animations are in the [`/notebooks`](centpy/notebooks/) folder and can be executed with [Google Colab](https://colab.research.google.com/github/AnilZen/centpy/blob/master/notebooks/index.ipynb).
+
+Centpy provides three main classes for parameters, equations, and solvers. These classes are explained based on the numerical solution of a one-dimensional [Burgers equation](https://colab.research.google.com/github/AnilZen/centpy/blob/master/notebooks/Burgers_1d.ipynb) below.
 
 ### Parameters
 The parameter classes are simple [data classes](https://docs.python.org/3/library/dataclasses.html) without methods: `Pars1d` and `Pars1d` defined in [`parameters.py`](centpy/parameters.py). Each attribute has a default 
