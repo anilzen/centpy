@@ -1,4 +1,7 @@
 # centpy
+
+[![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AnilZen/centpy/blob/master/notebooks/index.ipynb)
+
 Central schemes for conservation laws in Python.
 
 The schemes are translated into Python from [CentPack](https://home.cscamm.umd.edu/centpack/) written by [Jorge Balbás](http://www.csun.edu/~jb715473/index.htm) and [Eitan Tadmor](https://home.cscamm.umd.edu/people/faculty/tadmor/).

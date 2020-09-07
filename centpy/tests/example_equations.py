@@ -181,7 +181,7 @@ class Scalar2d(centpy.Equation2d):
         return np.abs(np.cos(u))
 
     def spectral_radius_y(self, u):
-        return u ** 2
+        return u**2
 
 
 # Euler equation
