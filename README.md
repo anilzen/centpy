@@ -8,7 +8,7 @@ The schemes are translated into Python from [CentPack](https://home.cscamm.umd.e
 
 [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AnilZen/centpy/blob/master/notebooks/index.ipynb)
 
-Example use cases and animations are in the [`/notebooks`](centpy/notebooks/) folder and can be executed with [Google Colab](https://colab.research.google.com/github/AnilZen/centpy/blob/master/notebooks/index.ipynb).
+Example use cases and animations are in the [`/notebooks`](notebooks/) folder and can be executed with [Google Colab](https://colab.research.google.com/github/AnilZen/centpy/blob/master/notebooks/index.ipynb).
 
 Centpy provides three main classes for parameters, equations, and solvers. These classes are explained based on the numerical solution of a one-dimensional [Burgers equation](https://colab.research.google.com/github/AnilZen/centpy/blob/master/notebooks/Burgers_1d.ipynb) below.
 
